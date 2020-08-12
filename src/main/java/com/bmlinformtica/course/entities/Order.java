@@ -11,11 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="tb_order")
 public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	// Propriedades da classe order
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
@@ -24,10 +27,13 @@ public class Order implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="client_id")
+	@JsonIgnore
 	private User client;
 	
+	// Método construtor
 	public Order() {}
 	
+	// Método de instanciação das propriedades da classe
 	public Order(Integer id, Instant moment, Integer orderStatus, User client) {
 		super();
 		this.id = id;
@@ -35,11 +41,8 @@ public class Order implements Serializable{
 		this.orderStatus = orderStatus;
 		this.client = client;
 	}
-	
-	public double total() {
-		return 0;
-	}
 
+	// Getters and Setters
 	public Integer getId() {
 		return id;
 	}
@@ -72,6 +75,7 @@ public class Order implements Serializable{
 		this.client = client;
 	}
 
+	// Hashcode Equals
 	@Override
 	public int hashCode() {
 		final int prime = 31;
