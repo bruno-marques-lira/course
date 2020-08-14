@@ -70,9 +70,6 @@ public class TestConfig implements CommandLineRunner {
 		Category cat2 = new Category(null, "Books");
 		Category cat3 = new Category(null, "Computers");
 		
-		// Armazenando categorias instanciadas no banco de dados
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
-		
 		// Instanciando produtos e armazenando no banco de dados
 		Product p1 = new Product(null, "The Lord of the Rings", "A Sociedade do Anel", 90.50, "");
 		Product p2 = new Product(null, "The Lord of the Rings", "As duas Torres", 90.50, "");
@@ -84,7 +81,26 @@ public class TestConfig implements CommandLineRunner {
 		Product p8 = new Product(null, "PC Gammer", "512GB SSD, 16GB RAM, Placa de Vídeo 4GB Gforce", 1200.00, "");
 		Product p9 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 		
+		// Armazenando categorias instanciadas no banco de dados
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		
 		// Armazenando produtos instanciados no banco de dados
-		productsRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9));		
+		productsRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9));	
+		
+		// Associando Produtos a Categorias
+		p6.getCategories().add(cat1);
+		p7.getCategories().add(cat1);
+		p8.getCategories().add(cat1);
+		p1.getCategories().add(cat2);
+		p2.getCategories().add(cat2);
+		p3.getCategories().add(cat2);
+		p4.getCategories().add(cat2);
+		p5.getCategories().add(cat2);
+		p9.getCategories().add(cat2);
+		p7.getCategories().add(cat3);
+		p8.getCategories().add(cat3);
+		
+		// Armazenando produtos instanciados no banco de dados
+		productsRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9));	
 	}
 }
