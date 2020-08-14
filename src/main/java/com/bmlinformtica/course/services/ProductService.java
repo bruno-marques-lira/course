@@ -6,21 +6,21 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bmlinformtica.course.entities.User;
-import com.bmlinformtica.course.repositories.UserRepository;
+import com.bmlinformtica.course.entities.Product;
+import com.bmlinformtica.course.repositories.ProductRepository;
 
 @Service
 public class ProductService {
 	
 	@Autowired
-	private UserRepository Userrepo;
+	private ProductRepository productRepository;
 	
-	public List<User> findAll() {
-		return Userrepo.findAll();
+	public List<Product> findAll() {
+		return productRepository.findAll();
 	}
 	
-	public User findById(Long id) {
-		Optional<User> obj = Userrepo.findById(id);
+	public Product findById(Long id) {
+		Optional<Product> obj = productRepository.findById(id);
 		return obj.get();
 	}
 }

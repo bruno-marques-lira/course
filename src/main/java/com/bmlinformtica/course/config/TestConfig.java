@@ -24,19 +24,19 @@ public class TestConfig implements CommandLineRunner {
 	
 	// Repositório: Acessa a tabela de usuários do banco de dados
 	@Autowired
-	private UserRepository userRepo;
+	private UserRepository userRepository;
 	
 	// Repositório: Acessa a tabela de pedidos do banco de dados
 	@Autowired
-	private OrderRepository orderRepo;
+	private OrderRepository orderRepository;
 	
 	// Repositório: Acessa a tabela de categorias do banco de dados
 	@Autowired
-	private CategoryRepository catRepo;
+	private CategoryRepository categoryRepository;
 	
 	// Repositório: Acessa a tabela de produtos do banco de dados
 	@Autowired
-	private ProductRepository prodRepo;
+	private ProductRepository productsRepository;
 	
 	// Programa: Linha de comando de execução pós Run as...
 	@Override
@@ -60,10 +60,10 @@ public class TestConfig implements CommandLineRunner {
 		Order o6 = new Order(null, Instant.parse("2020-08-14T11:21:32Z"), OrderStatus.CANCELED, u5);
 		
 		// Armazenando usuários instanciados no banco de dados
-		userRepo.saveAll(Arrays.asList(u1, u2, u3, u4, u5));
+		userRepository.saveAll(Arrays.asList(u1, u2, u3, u4, u5));
 		
 		// Armazenando pedidos instanciados no banco de dados
-		orderRepo.saveAll(Arrays.asList(o1, o2, o3, o4, o5, o6));
+		orderRepository.saveAll(Arrays.asList(o1, o2, o3, o4, o5, o6));
 		
 		// Instanciando categorias e armazenando no banco de dados
 		Category cat1 = new Category(null, "Eletronics");
@@ -71,7 +71,7 @@ public class TestConfig implements CommandLineRunner {
 		Category cat3 = new Category(null, "Computers");
 		
 		// Armazenando categorias instanciadas no banco de dados
-		catRepo.saveAll(Arrays.asList(cat1, cat2, cat3));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		
 		// Instanciando produtos e armazenando no banco de dados
 		Product p1 = new Product(null, "The Lord of the Rings", "A Sociedade do Anel", 90.50, "");
@@ -85,6 +85,6 @@ public class TestConfig implements CommandLineRunner {
 		Product p9 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 		
 		// Armazenando produtos instanciados no banco de dados
-		prodRepo.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9));		
+		productsRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9));		
 	}
 }

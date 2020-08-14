@@ -17,17 +17,17 @@ import com.bmlinformtica.course.services.OrderService;
 public class OrderResource {
 	
 	@Autowired
-	private OrderService Orderservice;
+	private OrderService orderService;
 	
 	@GetMapping
 	public ResponseEntity<List<Order>> findAll() {
-		List<Order> list = Orderservice.findAll();
+		List<Order> list = orderService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value="/{id}")
-	public ResponseEntity<Order> findById(@PathVariable Integer id) {
-		Order obj = Orderservice.findById(id);
-		return ResponseEntity.ok().body(obj);		
+	public ResponseEntity<Order> findById(@PathVariable Long id) {
+		Order obj = orderService.findById(id);
+		return ResponseEntity.ok(obj);		
 	}
 }

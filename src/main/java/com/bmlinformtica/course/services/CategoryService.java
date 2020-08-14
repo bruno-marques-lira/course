@@ -19,7 +19,7 @@ public class CategoryService {
 		return Catrepo.findAll();
 	}
 	
-	public Category findById(Integer id) {
+	public Category findById(Long id) {
 		Optional<Category> obj = Catrepo.findById(id);
 		return obj.get();
 	}

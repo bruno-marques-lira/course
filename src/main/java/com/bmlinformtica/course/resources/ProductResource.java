@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bmlinformtica.course.entities.User;
+import com.bmlinformtica.course.entities.Product;
 import com.bmlinformtica.course.services.ProductService;
 
 @RestController
@@ -17,17 +17,17 @@ import com.bmlinformtica.course.services.ProductService;
 public class ProductResource {
 	
 	@Autowired
-	private ProductService Prodservice;
+	private ProductService productService;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> findAll() {
-		List<User> list = Prodservice.findAll();
+	public ResponseEntity<List<Product>> findAll() {
+		List<Product> list = productService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value="/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id) {
-		User obj = Prodservice.findById(id);
+	public ResponseEntity<Product> findById(@PathVariable Long id) {
+		Product obj = productService.findById(id);
 		return ResponseEntity.ok(obj);		
 	}
 
