@@ -8,10 +8,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.bmlinformtica.course.entities.Category;
 import com.bmlinformtica.course.entities.Order;
+import com.bmlinformtica.course.entities.Product;
 import com.bmlinformtica.course.entities.User;
 import com.bmlinformtica.course.entities.enums.OrderStatus;
+import com.bmlinformtica.course.repositories.CategoryRepository;
 import com.bmlinformtica.course.repositories.OrderRepository;
+import com.bmlinformtica.course.repositories.ProductRepository;
 import com.bmlinformtica.course.repositories.UserRepository;
 
 @Configuration
@@ -25,6 +29,14 @@ public class TestConfig implements CommandLineRunner {
 	// Repositório: Acessa a tabela de pedidos do banco de dados
 	@Autowired
 	private OrderRepository orderRepo;
+	
+	// Repositório: Acessa a tabela de categorias do banco de dados
+	@Autowired
+	private CategoryRepository catRepo;
+	
+	// Repositório: Acessa a tabela de produtos do banco de dados
+	@Autowired
+	private ProductRepository prodRepo;
 	
 	// Programa: Linha de comando de execução pós Run as...
 	@Override
@@ -52,5 +64,27 @@ public class TestConfig implements CommandLineRunner {
 		
 		// Armazenando pedidos instanciados no banco de dados
 		orderRepo.saveAll(Arrays.asList(o1, o2, o3, o4, o5, o6));
+		
+		// Instanciando categorias e armazenando no banco de dados
+		Category cat1 = new Category(null, "Eletronics");
+		Category cat2 = new Category(null, "Books");
+		Category cat3 = new Category(null, "Computers");
+		
+		// Armazenando categorias instanciadas no banco de dados
+		catRepo.saveAll(Arrays.asList(cat1, cat2, cat3));
+		
+		// Instanciando produtos e armazenando no banco de dados
+		Product p1 = new Product(null, "The Lord of the Rings", "A Sociedade do Anel", 90.50, "");
+		Product p2 = new Product(null, "The Lord of the Rings", "As duas Torres", 90.50, "");
+		Product p3 = new Product(null, "The Lord of the Rings", "O Retorno do Rei", 90.50, "");
+		Product p4 = new Product(null, "The Lord of the Rings", "Jogos Vorazes", 90.50, "");
+		Product p5 = new Product(null, "The Lord of the Rings", "As Crônicas do Rei Arthur", 90.50, "");
+		Product p6 = new Product(null, "Smart TV", "60'", 2190.0, "");
+		Product p7 = new Product(null, "Macbook Pro", "512GB SSD, 16GB RAM, Placa de Vídeo 4GB Gforce", 10599.00, "");
+		Product p8 = new Product(null, "PC Gammer", "512GB SSD, 16GB RAM, Placa de Vídeo 4GB Gforce", 1200.00, "");
+		Product p9 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
+		
+		// Armazenando produtos instanciados no banco de dados
+		prodRepo.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9));		
 	}
 }
