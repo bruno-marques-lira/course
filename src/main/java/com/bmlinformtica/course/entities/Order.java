@@ -11,34 +11,40 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bmlinformtica.course.entities.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="tb_order")
-public class Order implements Serializable{
+@Table(name = "tb_order")
+public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	// Propriedades da classe order
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	private Integer orderStatus;
 	
-	@ManyToOne
-	@JoinColumn(name="client_id")
 	@JsonIgnore
+	private Integer orderStatus;
+
+	@ManyToOne
+	@JoinColumn(name = "client_id")
 	private User client;
-	
+
 	// Método construtor
-	public Order() {}
-	
+	public Order() {
+	}
+
 	// Método de instanciação das propriedades da classe
-	public Order(Integer id, Instant moment, Integer orderStatus, User client) {
+	public Order(Integer id, Instant moment, OrderStatus orderStatus, User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
-		this.orderStatus = orderStatus;
+		setOrderStatus(orderStatus);
 		this.client = client;
 	}
 
@@ -59,14 +65,16 @@ public class Order implements Serializable{
 		this.moment = moment;
 	}
 
-	public Integer getOrderStatus() {
-		return orderStatus;
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(orderStatus);
 	}
 
-	public void setOrderStatus(Integer orderStatus) {
-		this.orderStatus = orderStatus;
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if (orderStatus != null) {
+			this.orderStatus = orderStatus.getCode();
+		}
 	}
-	
+
 	public User getClient() {
 		return client;
 	}

@@ -13,14 +13,14 @@ import com.bmlinformtica.course.repositories.OrderRepository;
 public class OrderService {
 	
 	@Autowired
-	private OrderRepository repository;
+	private OrderRepository orderRepo;
 	
 	public List<Order> findAll() {
-		return repository.findAll();
+		return orderRepo.findAll();
 	}
 	
-	public Order findById(Long id) {
-		Optional<Order> obj = repository.findById(id);
+	public Order findById(Integer id) {
+		Optional<Order> obj = orderRepo.findById(id);
 		return obj.get();
 	}
 }

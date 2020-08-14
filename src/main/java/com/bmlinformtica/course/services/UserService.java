@@ -13,14 +13,14 @@ import com.bmlinformtica.course.repositories.UserRepository;
 public class UserService {
 	
 	@Autowired
-	private UserRepository repository;
+	private UserRepository Userrepo;
 	
 	public List<User> findAll() {
-		return repository.findAll();
+		return Userrepo.findAll();
 	}
 	
 	public User findById(Long id) {
-		Optional<User> obj = repository.findById(id);
+		Optional<User> obj = Userrepo.findById(id);
 		return obj.get();
 	}
 }

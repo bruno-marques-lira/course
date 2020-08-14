@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="c7a3c1c1-8701-49ee-a627-e6b8ee74a4f2" basePath="/get">
+		<http:listener-connection host="localhost" port="8083" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration_springboot_rest_controler_orders" doc:name="HTTP Request configuration" doc:id="dbcafd16-a2dc-4100-8b0b-e6488d6630ae">
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<flow name="prj-mule-invoke-java-springboot-restserviceFlow" doc:id="56a1f408-0647-4a6c-a029-312231f18c7f" >
+		<http:listener doc:name="Listener" doc:id="fb21b2c1-6610-457f-84d0-8a6406429b2e" config-ref="HTTP_Listener_config" path="/{orderid}"/>
+		<set-variable value="#[attributes.uriParams.orderid]" doc:name="Set Variable Order Id" doc:id="5f3d9673-f761-45ad-9512-9907854b7d17" variableName="OrderId"/>
+		<logger level="INFO" doc:name="Started Log" doc:id="c6642d5e-27ad-4ee7-96e9-c80026a5f3a6" message="Started Log - Mulesoft Invoking Springboot Service - Order Id: #[vars.OrderId]"/>
+		<http:request method="GET" doc:name="Request Springboot Rest Order Id" doc:id="d222975c-6089-403c-a692-a3df4b48dc22" config-ref="HTTP_Request_configuration_springboot_rest_controler_orders" path="/orders/{OrderId}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	OrderId : vars.OrderId
+}]]]></http:uri-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="41fdfc14-59e6-415a-ba35-691c9e7b6aa7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"id": payload.id,
+	"moment": payload.moment,
+	"orderStatus": payload.orderStatus,
+	"client": {
+		"id": payload.client.id,
+		"name": payload.client.name,
+		"email": payload.client.email,
+		"phone": payload.client.phone,
+		"password": payload.client.password
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Terminated Logger" doc:id="00ae1e1e-0c8a-4781-a212-e0c9b8b5da64" message="Terminated Log - Mulesoft Invoking Springboot Service - Order Id: #[payload]"/>
+	</flow>
+</mule>
